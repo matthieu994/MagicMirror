@@ -7,15 +7,9 @@
 Module.register("compliments", {
 	// Module config defaults.
 	defaults: {
-		compliments: {
-			anytime: ["Hey there sexy!"],
-			morning: ["Good morning, handsome!", "Enjoy your day!", "How was your sleep?"],
-			afternoon: ["Hello, beauty!", "You look sexy!", "Looking good today!"],
-			evening: ["Wow, you look hot!", "You look nice!", "Hi, sexy!"],
-			"....-01-01": ["Happy new year!"]
-		},
+		compliments: {},
 		updateInterval: 30000,
-		remoteFile: null,
+		remoteFile: "compliments.json",
 		fadeSpeed: 4000,
 		morningStartTime: 3,
 		morningEndTime: 12,
@@ -59,7 +53,9 @@ Module.register("compliments", {
 	 * @returns {number} a random index of given array
 	 */
 	randomIndex: function (compliments) {
-		if (compliments.length === 1) {
+		if (compliments.length === 0) {
+			return;
+		} else if (compliments.length === 1) {
 			return 0;
 		}
 
@@ -90,7 +86,11 @@ Module.register("compliments", {
 
 		if (hour >= this.config.morningStartTime && hour < this.config.morningEndTime && this.config.compliments.hasOwnProperty("morning")) {
 			compliments = this.config.compliments.morning.slice(0);
-		} else if (hour >= this.config.afternoonStartTime && hour < this.config.afternoonEndTime && this.config.compliments.hasOwnProperty("afternoon")) {
+		} else if (
+			hour >= this.config.afternoonStartTime &&
+			hour < this.config.afternoonEndTime &&
+			this.config.compliments.hasOwnProperty("afternoon")
+		) {
 			compliments = this.config.compliments.afternoon.slice(0);
 		} else if (this.config.compliments.hasOwnProperty("evening")) {
 			compliments = this.config.compliments.evening.slice(0);

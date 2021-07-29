@@ -1,0 +1,68 @@
+@import "./api.css";
+
+#categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category {
+  margin: 0.5rem;
+  padding: 1rem 0.5rem;
+  border: 1px solid rgb(255 255 255 / 22%);
+  border-radius: 7px;
+  box-shadow: 2px 2px 8px 1px #10080878;
+  max-width: calc(50vw - 2.8rem);
+}
+.category header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.category header .actions {
+  margin-right: 10px;
+}
+.category header .actions div[action="add"] {
+  margin-right: 10px;
+}
+.category span {
+  display: block;
+}
+.category h3 {
+  margin: 0;
+  display: inline-block;
+}
+.category > div[action] {
+  float: right;
+  margin-top: 16px;
+}
+
+.compliment {
+  display: flex;
+  align-items: baseline;
+}
+.compliment > div[action] {
+  margin: 12px 10px 0 5px;
+  min-width: 10px;
+}
+.compliment > div[action]:last-of-type {
+  margin-right: 10px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+div[action] {
+  display: inline-block;
+  cursor: pointer;
+}
+
+menu {
+  display: flex;
+  flex-direction: column;
+}

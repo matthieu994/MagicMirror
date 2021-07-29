@@ -73,7 +73,11 @@ function App() {
 			if (e.code === "ENOENT") {
 				Log.error(Utils.colors.error("WARNING! Could not find config file. Please create one. Starting with default configuration."));
 			} else if (e instanceof ReferenceError || e instanceof SyntaxError) {
-				Log.error(Utils.colors.error(`WARNING! Could not validate config file. Starting with default configuration. Please correct syntax errors at or above this line: ${e.stack}`));
+				Log.error(
+					Utils.colors.error(
+						`WARNING! Could not validate config file. Starting with default configuration. Please correct syntax errors at or above this line: ${e.stack}`
+					)
+				);
 			} else {
 				Log.error(Utils.colors.error(`WARNING! Could not load config file. Starting with default configuration. Error found: ${e}`));
 			}
@@ -93,7 +97,13 @@ function App() {
 
 		const usedDeprecated = deprecatedOptions.filter((option) => userConfig.hasOwnProperty(option));
 		if (usedDeprecated.length > 0) {
-			Log.warn(Utils.colors.warn(`WARNING! Your config is using deprecated options: ${usedDeprecated.join(", ")}. Check README and CHANGELOG for more up-to-date ways of getting the same functionality.`));
+			Log.warn(
+				Utils.colors.warn(
+					`WARNING! Your config is using deprecated options: ${usedDeprecated.join(
+						", "
+					)}. Check README and CHANGELOG for more up-to-date ways of getting the same functionality.`
+				)
+			);
 		}
 	}
 
@@ -127,7 +137,9 @@ function App() {
 			let m = new Module();
 
 			if (m.requiresVersion) {
-				Log.log(`Check MagicMirror version for node helper '${moduleName}' - Minimum version: ${m.requiresVersion} - Current version: ${global.version}`);
+				Log.log(
+					`Check MagicMirror version for node helper '${moduleName}' - Minimum version: ${m.requiresVersion} - Current version: ${global.version}`
+				);
 				if (cmpVersions(global.version, m.requiresVersion) >= 0) {
 					Log.log("Version is ok!");
 				} else {

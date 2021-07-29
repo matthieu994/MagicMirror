@@ -1,4 +1,3 @@
-/config
 /coverage
 /vendor
 !/vendor/vendor.js

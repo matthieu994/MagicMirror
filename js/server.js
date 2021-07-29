@@ -6,11 +6,12 @@
  */
 const express = require("express");
 const app = require("express")();
+const bodyParser = require("body-parser");
+var cors = require("cors");
 const path = require("path");
 const ipfilter = require("express-ipfilter").IpFilter;
 const fs = require("fs");
 const helmet = require("helmet");
-
 const Log = require("logger");
 const Utils = require("./utils.js");
 
@@ -50,18 +51,26 @@ function Server(config, callback) {
 		Log.warn(Utils.colors.warn("You're using a full whitelist configuration to allow for all IPs"));
 	}
 
+	app.use(cors());
+	app.use(bodyParser.json());
+	app.use(bodyParser.urlencoded({ extended: true }));
 	app.use(function (req, res, next) {
 		ipfilter(config.ipWhitelist, { mode: config.ipWhitelist.length === 0 ? "deny" : "allow", log: false })(req, res, function (err) {
 			if (err === undefined) {
 				return next();
 			}
 			Log.log(err.message);
-			res.status(403).send("This device is not allowed to access your mirror. <br> Please check your config.js or config.js.sample to change this.");
+			res.status(403).send(
+				"This device is not allowed to access your mirror. <br> Please check your config.js or config.js.sample to change this."
+			);
 		});
 	});
 	app.use(helmet({ contentSecurityPolicy: false }));
 
 	app.use("/js", express.static(__dirname));
+
+	const api = express.Router();
+	app.use("/api", api);
 
 	const directories = ["/config", "/css", "/fonts", "/modules", "/vendor", "/translations", "/tests/configs"];
 	for (const directory of directories) {
@@ -74,6 +83,15 @@ function Server(config, callback) {
 
 	app.get("/config", function (req, res) {
 		res.send(config);
+	});
+
+	// Compliments Page
+	const compliments = express.Router();
+	api.use("/compliments", compliments);
+	require("./api/compliments")(compliments, path);
+	app.get("/compliments", function (req, res) {
+		let html = fs.readFileSync(path.resolve(`${global.root_path}/modules/default/compliments/index.html`), { encoding: "utf8" });
+		res.send(html);
 	});
 
 	app.get("/", function (req, res) {

@@ -1,0 +1,14 @@
+{
+	"anytime": ["Coucou beau gosse !"],
+	"morning": ["Bon matin !", "Bonne journée :)", "Bien dormi?"],
+	"afternoon": ["Hello, beauté !", "Bonne après-midi !"],
+	"evening": ["Wow, pas mal !", "T'es plutôt bg !", "Bonne soirée :)"],
+	"....-01-01": ["Bonne année !"],
+	"....-12-31": ["Joyeux Noël !"],
+	"....-08-09": ["Bon anniversaire Matthieu !"],
+	"....-07-27": ["Bon anniversaire Fred !"],
+	"....-07-01": ["Bon anniversaire Romane !"],
+	"....-10-08": ["Bon anniversaire Malou !"],
+	"snow": ["On fait un bonhomme de neige?", "Bataille de boules de neige !"],
+	"rain": ["Oublie pas ton parapluie"]
+}

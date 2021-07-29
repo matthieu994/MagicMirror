@@ -4,7 +4,18 @@
  * By Michael Teeuw https://michaelteeuw.nl
  * MIT Licensed.
  */
-const defaultModules = ["alert", "calendar", "clock", "compliments", "currentweather", "helloworld", "newsfeed", "weatherforecast", "updatenotification", "weather"];
+const defaultModules = [
+	"alert",
+	"calendar",
+	"clock",
+	"compliments",
+	"currentweather",
+	"helloworld",
+	"newsfeed",
+	"weatherforecast",
+	"updatenotification",
+	"weather"
+];
 
 /*************** DO NOT EDIT THE LINE BELOW ***************/
 if (typeof module !== "undefined") {
