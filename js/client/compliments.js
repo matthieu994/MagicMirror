@@ -1,4 +1,4 @@
-const API = "http://localhost:25566/api/compliments";
+const API = `${window.location.origin}/api/compliments`;
 
 const get = (url) => {
 	return new Promise((resolve, reject) => {
