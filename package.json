@@ -47,6 +47,8 @@
 	},
 	"homepage": "https://magicmirror.builders",
 	"devDependencies": {
+		"axios": "^0.21.1",
+		"axios-oauth-client": "^1.4.3",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-jest": "^24.3.6",
 		"eslint-plugin-jsdoc": "^35.4.0",
@@ -59,6 +61,7 @@
 		"nyc": "^15.1.0",
 		"prettier": "^2.3.1",
 		"pretty-quick": "^3.1.1",
+		"puppeteer": "^10.1.0",
 		"reload": "^3.2.0",
 		"sinon": "^11.1.1",
 		"spectron": "^13.0.0",

@@ -30,6 +30,7 @@ Module.register("compliments", {
 	// Define start sequence.
 	start: function () {
 		Log.info("Starting module: " + this.name);
+		this.sendSocketNotification("COMPLIMENTS_SOCKET_START");
 
 		this.lastComplimentIndex = -1;
 
@@ -190,6 +191,16 @@ Module.register("compliments", {
 	notificationReceived: function (notification, payload, sender) {
 		if (notification === "CURRENTWEATHER_TYPE") {
 			this.setCurrentWeatherType(payload.type);
+		}
+	},
+
+	socketNotificationReceived: function (notification, payload) {
+		if (notification === "UPDATE_COMPLIMENTS") {
+			Log.log(this.name + " : " + notification);
+			this.complimentFile((response) => {
+				this.config.compliments = JSON.parse(response);
+				this.updateDom();
+			});
 		}
 	}
 });

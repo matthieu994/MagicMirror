@@ -430,6 +430,12 @@ var Module = Class.extend({
 			},
 			options
 		);
+	},
+
+	helpers: {
+		getHoursMinutes: (date) => {
+			return { hours: new String(date.getHours()).padStart(2, "0"), minutes: new String(date.getMinutes()).padStart(2, "0") };
+		}
 	}
 });
 
@@ -498,7 +504,14 @@ Module.create = function (name) {
 
 Module.register = function (name, moduleDefinition) {
 	if (moduleDefinition.requiresVersion) {
-		Log.log("Check MagicMirror version for module '" + name + "' - Minimum version:  " + moduleDefinition.requiresVersion + " - Current version: " + window.version);
+		Log.log(
+			"Check MagicMirror version for module '" +
+				name +
+				"' - Minimum version:  " +
+				moduleDefinition.requiresVersion +
+				" - Current version: " +
+				window.version
+		);
 		if (cmpVersions(window.version, moduleDefinition.requiresVersion) >= 0) {
 			Log.log("Version is ok!");
 		} else {

@@ -80,6 +80,7 @@ const NodeHelper = Class.extend({
 		this.expressApp = app;
 
 		app.use(`/${this.name}`, express.static(`${this.path}/public`));
+		console.log(`/${this.name}`, `${this.path}/public`);
 	},
 
 	/* setSocketIO(io)

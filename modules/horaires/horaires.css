@@ -1,0 +1,10 @@
+div#horaires {
+  display: flex;
+  flex-direction: column;
+}
+
+#horaires span {
+  float: right;
+  display: block;
+  width: 66%;
+}

@@ -110,7 +110,7 @@ let config = {
 				broadcastNewsUpdates: true
 			}
 		},
-		{ module: "horaires" }
+		{ module: "horaires", position: "top_left" }
 	]
 };
 

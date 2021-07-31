@@ -69,9 +69,6 @@ function Server(config, callback) {
 
 	app.use("/js", express.static(__dirname));
 
-	const api = express.Router();
-	app.use("/api", api);
-
 	const directories = ["/config", "/css", "/fonts", "/modules", "/vendor", "/translations", "/tests/configs"];
 	for (const directory of directories) {
 		app.use(directory, express.static(path.resolve(global.root_path + directory)));
@@ -83,15 +80,6 @@ function Server(config, callback) {
 
 	app.get("/config", function (req, res) {
 		res.send(config);
-	});
-
-	// Compliments Page
-	const compliments = express.Router();
-	api.use("/compliments", compliments);
-	require("./api/compliments")(compliments, path);
-	app.get("/compliments", function (req, res) {
-		let html = fs.readFileSync(path.resolve(`${global.root_path}/modules/default/compliments/index.html`), { encoding: "utf8" });
-		res.send(html);
 	});
 
 	app.get("/", function (req, res) {
