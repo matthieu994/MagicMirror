@@ -1,0 +1,9 @@
+{
+	"compilerOptions": {
+		"noImplicitAny": false,
+		"allowJs": true,
+		"outDir": "dist",
+		"esModuleInterop": true
+	},
+	"exclude": ["modules", "node_modules"]
+}

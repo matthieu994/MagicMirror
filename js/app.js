@@ -7,10 +7,9 @@
 
 // Alias modules mentioned in package.js under _moduleAliases.
 require("module-alias/register");
-
 const fs = require("fs");
 const path = require("path");
-const Log = require("logger");
+const Log = require("./logger");
 const Server = require(`${__dirname}/server`);
 const Utils = require(`${__dirname}/utils`);
 const defaultModules = require(`${__dirname}/../modules/default/defaultmodules`);
@@ -122,14 +121,21 @@ function App() {
 			moduleFolder = `${__dirname}/../modules/default/${module}`;
 		}
 
-		const helperPath = `${moduleFolder}/node_helper.js`;
+		const helperBasePath = `${moduleFolder}/node_helper`;
+		let helperPath = helperBasePath;
 
 		let loadHelper = true;
 		try {
+			helperPath = helperBasePath + ".js";
 			fs.accessSync(helperPath, fs.R_OK);
 		} catch (e) {
-			loadHelper = false;
-			Log.log(`No helper found for module: ${moduleName}.`);
+			try {
+				helperPath = helperBasePath + ".ts";
+				fs.accessSync(helperPath, fs.R_OK);
+			} catch (e) {
+				loadHelper = false;
+				Log.log(`No helper found for module: ${moduleName}.`);
+			}
 		}
 
 		if (loadHelper) {
@@ -221,7 +227,7 @@ function App() {
 	 */
 	this.start = function (callback) {
 		loadConfig(function (c) {
-			config = c;
+			let config = c;
 
 			Log.setLogLevel(config.logLevel);
 

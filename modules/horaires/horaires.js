@@ -43,6 +43,8 @@ Module.register("horaires", {
 		}
 		this.config.horairesBUS.forEach((entry) => {
 			const { stop, times } = entry;
+			if (!times || !stop) return;
+
 			const div = document.createElement("div");
 			const icon = document.createElement("i");
 			icon.className = "fas fa-bus";
