@@ -41,6 +41,7 @@ Module.register("horaires", {
 		if (this.config.horairesBUS.length === 0) {
 			wrapper.innerHTML = this.translate("LOADING");
 		}
+		console.log(this.config.horairesBUS, this.config.horairesRER);
 		this.config.horairesBUS.forEach((entry) => {
 			const { stop, times } = entry;
 			if (!times || !stop) return;

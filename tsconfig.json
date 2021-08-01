@@ -2,8 +2,10 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"allowJs": true,
-		"outDir": "dist",
-		"esModuleInterop": true
+		"outDir": "./dist",
+		"esModuleInterop": true,
+		"target": "ES6",
+		"module": "commonjs"
 	},
 	"exclude": ["modules", "node_modules"]
 }

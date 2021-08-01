@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "DISPLAY=\"${DISPLAY:=:0}\" ./node_modules/.bin/electron js/electron.js --no-sandbox",
 		"start:dev": "$Env:DISPLAY=\"${DISPLAY:=:0}\" ./node_modules/.bin/electron js/electron.js dev",
-		"start:windows": ".\\node_modules\\.bin\\electron js\\electron.js",
+		"start:windows": ".\\node_modules\\.bin\\electron js\\electron.js --no-sandbox",
 		"server": "ts-node ./serveronly/index.ts",
 		"server:dev": "nodemon -e ts,js,json ./serveronly/index.ts",
 		"install": "git pull && echo \"Installing vendor files ...\" && cd vendor && npm install --loglevel=error",
@@ -74,7 +74,7 @@
 		"ts-node": "^10.1.0"
 	},
 	"optionalDependencies": {
-		"electron": "^11.4.9"
+		"electron": "^11.4.10"
 	},
 	"dependencies": {
 		"body-parser": "^1.19.0",
@@ -94,7 +94,8 @@
 		"node-ical": "^0.13.0",
 		"nodemon": "^2.0.12",
 		"simple-git": "^2.40.0",
-		"socket.io": "^4.1.2"
+		"socket.io": "^4.1.2",
+		"typescript": "^4.3.5"
 	},
 	"_moduleAliases": {
 		"node_helper": "js/node_helper.js",
