@@ -44,7 +44,6 @@ Module.register("horaires", {
 		console.log(this.config.horairesBUS, this.config.horairesRER);
 		this.config.horairesBUS.forEach((entry) => {
 			const { stop, times } = entry;
-			if (!times || !stop) return;
 
 			const div = document.createElement("div");
 			const icon = document.createElement("i");
@@ -52,11 +51,13 @@ Module.register("horaires", {
 			div.appendChild(icon);
 			div.innerHTML += ` ${stop} `;
 			const span = document.createElement("span");
-			times.forEach((time) => {
-				const date = new Date(time);
-				const { hours, minutes } = this.helpers.getHoursMinutes(date);
-				span.innerHTML += ` ${hours}:${minutes}`;
-			});
+			if (times) {
+				times.forEach((time) => {
+					const date = new Date(time);
+					const { hours, minutes } = this.helpers.getHoursMinutes(date);
+					span.innerHTML += ` ${hours}:${minutes}`;
+				});
+			}
 			div.appendChild(span);
 			wrapper.appendChild(div);
 		});

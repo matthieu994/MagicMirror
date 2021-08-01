@@ -55,7 +55,7 @@ module.exports = NodeHelper.create({
 							let times = stops.map((item) => new Date(item.MonitoredVehicleJourney.MonitoredCall.ExpectedArrivalTime).getTime());
 							resolve({ stop, times });
 						} else {
-							resolve({});
+							resolve({ stop });
 						}
 					})
 					.catch((error) => {
@@ -92,7 +92,14 @@ module.exports = NodeHelper.create({
 
 	getRERPassages: async function (urlRER) {
 		try {
-			const browser = await puppet.launch();
+			const browser =
+				process.platform === "linux"
+					? await puppet.launch({
+							executablePath: "/snap/bin/chromium",
+							args: ["--no-sandbox"],
+							headless: true
+					  })
+					: await puppet.launch();
 			const page = await browser.newPage();
 			const date = new Date();
 			const { hours, minutes } = helpers.getHoursMinutes(date);
@@ -106,7 +113,7 @@ module.exports = NodeHelper.create({
 			await browser.close();
 			return divs.filter((_, index) => index % 2 === 0);
 		} catch (e) {
-			console.error(e);
+			return [];
 		}
 	}
 });
