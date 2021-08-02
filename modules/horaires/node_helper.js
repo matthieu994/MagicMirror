@@ -14,6 +14,7 @@ const config = {
 	urlRERYerres:
 		"https://www.transilien.com/fr/les-fiches-horaires/resultats/?departure=Yerres&destination=Gare%20de%20Lyon%20(Paris)&errors=&idStopPointDestination=stop_point%3AIDFM%3AmonomodalStopPlace%3A470195&idUic7Departure=stop_area%3AIDFM%3A63044&completeDayResearch=false&startTimeSlot="
 };
+const results = { Boissy: null, Yerres: null };
 
 let access_token;
 
@@ -84,10 +85,14 @@ module.exports = NodeHelper.create({
 	},
 
 	getAllRERPassages: async function () {
-		let results = { Boissy: null, Yerres: null };
-		results.Boissy = await this.getRERPassages(config.urlRERBoissy);
-		results.Yerres = await this.getRERPassages(config.urlRERYerres);
-		this.sendSocketNotification("HORAIRES_FETCH_RESULT_RER", results);
+		this.getRERPassages(config.urlRERBoissy).then((passages) => {
+			results.Boissy = passages;
+			this.sendSocketNotification("HORAIRES_FETCH_RESULT_RER", results);
+		});
+		this.getRERPassages(config.urlRERYerres).then((passages) => {
+			results.Yerres = passages;
+			this.sendSocketNotification("HORAIRES_FETCH_RESULT_RER", results);
+		});
 	},
 
 	getRERPassages: async function (urlRER) {
@@ -106,12 +111,25 @@ module.exports = NodeHelper.create({
 			await page.goto(
 				`${urlRER}${hours}%3A${minutes}&date=${date.toISOString().substring(0, 10)}&endTimeSlot=${parseInt(hours) + 1}%3A${minutes}`
 			);
-			await page.waitForSelector(".timetable-sheets-row");
-			const divs = await page.evaluate(() =>
-				Array.from(document.querySelectorAll(".timetable-sheets-row__time--item"), (element) => element.textContent)
-			);
-			await browser.close();
-			return divs.filter((_, index) => index % 2 === 0);
+
+			return new Promise((resolve, reject) => {
+				// If no trains available
+				page.waitForSelector(".message-block__content")
+					.then(() => {
+						resolve([]);
+					})
+					.catch(() => null);
+
+				page.waitForSelector(".timetable-sheets-row")
+					.then(async () => {
+						const divs = await page.evaluate(() =>
+							Array.from(document.querySelectorAll(".timetable-sheets-row__time--item"), (element) => element.textContent)
+						);
+						await browser.close();
+						resolve(divs.filter((_, index) => index % 2 === 0));
+					})
+					.catch(() => null);
+			});
 		} catch (e) {
 			return [];
 		}

@@ -72,9 +72,11 @@ Module.register("horaires", {
 			div.appendChild(icon);
 			div.innerHTML += ` ${stop} `;
 			const span = document.createElement("span");
-			times.forEach((time) => {
-				span.innerHTML += ` ${time}`;
-			});
+			if (times) {
+				times.forEach((time) => {
+					span.innerHTML += ` ${time}`;
+				});
+			}
 			div.appendChild(span);
 			wrapper.appendChild(div);
 		});
